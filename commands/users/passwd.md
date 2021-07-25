@@ -1,4 +1,4 @@
-# passwd
+### passwd
 
 > Alterar a senha de um usuário.
 

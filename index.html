@@ -540,7 +540,7 @@
 <li>Criar um novo usuário e atribuí-lo a um grupo:</li>
 </ul>
 <p><code>adduser --ingroup {{grupo}} {{nome_do_usuario}}</code></p>
-<h1 id="chmod">chmod</h1>
+<h3 id="chmod">chmod</h3>
 <blockquote>
 <p>Altere as permissões de acesso de um arquivo ou diretório. Mais informações: <a href="https://www.gnu.org/software/coreutils/chmod" class="uri">https://www.gnu.org/software/coreutils/chmod</a>.</p>
 </blockquote>
@@ -561,7 +561,6 @@
 </ul>
 <p><code>chmod a+rx {{file}}</code></p>
 <ul>
-<li>Give others (not in the file owner’s group) the same rights as the group:</li>
 <li>Conceda a outros usuários (que não estão no grupo do proprietário do arquivo) os mesmos direitos que o grupo:</li>
 </ul>
 <p><code>chmod o=g {{file}}</code></p>
@@ -569,7 +568,7 @@
 <li>Remova todos os direitos de outros usuários:</li>
 </ul>
 <p><code>chmod o= {{file}}</code></p>
-<h1 id="passwd">passwd</h1>
+<h3 id="passwd">passwd</h3>
 <blockquote>
 <p>Alterar a senha de um usuário.</p>
 </blockquote>

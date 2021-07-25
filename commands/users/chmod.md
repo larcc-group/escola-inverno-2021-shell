@@ -1,4 +1,4 @@
-# chmod
+### chmod
 
 > Altere as permissões de acesso de um arquivo ou diretório.
 > Mais informações: <https://www.gnu.org/software/coreutils/chmod>.
@@ -19,7 +19,6 @@
 
 `chmod a+rx {{file}}`
 
-- Give others (not in the file owner's group) the same rights as the group:
 - Conceda a outros usuários (que não estão no grupo do proprietário do arquivo) os mesmos direitos que o grupo:
 
 `chmod o=g {{file}}`
