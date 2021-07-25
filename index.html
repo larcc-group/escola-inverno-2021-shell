@@ -1,0 +1,897 @@
+<html>
+<head>
+<title>Referência de comandos</title>
+</head>
+<body>
+<h1 id="ref-commands">Referência rápida de comandos</h1>
+<p>Produzido através das <a href="https://github.com/tldr-pages/tldr">TLDR PAGES.</a></p>
+<h2 id="índice">Índice</h2>
+<ul>
+<li><a href="#files">Manipulação de arquivos</a></li>
+<li><a href="#filters">Filtros de texto</a></li>
+<li><a href="#users">Gerenciamento de usuários</a></li>
+<li><a href="#utils">Utilitários</a></li>
+</ul>
+<h2 id="files">Manipulação de arquivos</h2>
+<h3 id="cat">cat</h3>
+<blockquote>
+<p>Mostra e concatena arquivos. Mais informações: <a href="https://www.gnu.org/software/coreutils/cat" class="uri">https://www.gnu.org/software/coreutils/cat</a>.</p>
+</blockquote>
+<ul>
+<li>Imprima o conteúdo de um arquivo na saída padrão:</li>
+</ul>
+<p><code>cat {{file}}</code></p>
+<ul>
+<li>Concatene vários arquivos no arquivo de destino:</li>
+</ul>
+<p><code>cat {{file1}} {{file2}} &gt; {{target_file}}</code></p>
+<ul>
+<li>Anexar vários arquivos ao arquivo de destino:</li>
+</ul>
+<p><code>cat {{file1}} {{file2}} &gt;&gt; {{target_file}}</code></p>
+<ul>
+<li>Numere todas as linhas de saída:</li>
+</ul>
+<p><code>cat -n {{file}}</code></p>
+<h3 id="cd">cd</h3>
+<blockquote>
+<p>Muda o diretório de trabalho. Mais informações: <a href="https://man.archlinux.org/man/cd.n" class="uri">https://man.archlinux.org/man/cd.n</a>.</p>
+</blockquote>
+<ul>
+<li>Vai até o dado diretório:</li>
+</ul>
+<p><code>cd {{path/to/directory}}</code></p>
+<ul>
+<li>Vai ao diretório do usuário logado:</li>
+</ul>
+<p><code>cd</code></p>
+<ul>
+<li>Vai para o diretório pai:</li>
+</ul>
+<p><code>cd ..</code></p>
+<ul>
+<li>Vai para o diretório em que você estava anteriormente:</li>
+</ul>
+<p><code>cd -</code></p>
+<h3 id="cp">cp</h3>
+<blockquote>
+<p>Copia arquivos e diretórios. Mais informações: <a href="https://www.gnu.org/software/coreutils/cp" class="uri">https://www.gnu.org/software/coreutils/cp</a>.</p>
+</blockquote>
+<ul>
+<li>Copia um arquivo para um outro local:</li>
+</ul>
+<p><code>cp {{path/to/source_file.ext}} {{path/to/target_file.ext}}</code></p>
+<ul>
+<li>Copia um arquivo para outro diretório, mantendo o nome do arquivo:</li>
+</ul>
+<p><code>cp {{path/to/source_file.ext}} {{path/to/target_parent_directory}}</code></p>
+<ul>
+<li>Recursively copy a directory’s contents to another location (if the destination exists, the directory is copied inside it):</li>
+<li>Copia recursivamente o conteúdo de udiretório para outro. Se o diretório destino existe, o diretório é copiado para dentro do mesmo.</li>
+</ul>
+<p><code>cp -R {{path/to/source_directory}} {{path/to/target_directory}}</code></p>
+<ul>
+<li>Copia arquivos de texto para outro local (modo interativo em que o usuário é questionado se quer sobrescrever arquivos):</li>
+</ul>
+<p><code>cp -i {{*.txt}} {{path/to/target_directory}}</code></p>
+<h3 id="file">file</h3>
+<blockquote>
+<p>Determine o tipo de arquivo. Mais informações: <a href="https://manned.org/file" class="uri">https://manned.org/file</a>.</p>
+</blockquote>
+<ul>
+<li>Dá uma descrição do tipo de arquivo especificado. Funciona bem para arquivos sem extensão:</li>
+</ul>
+<p><code>file {{filename}}</code></p>
+<ul>
+<li>Examine um arquivo compactado e determine os tipos de arquivo contidos:</li>
+</ul>
+<p><code>file -z {{foo.zip}}</code></p>
+<ul>
+<li>Determine o MIME encoding de um arquivo:</li>
+</ul>
+<p><code>file -i {{filename}}</code></p>
+<h3 id="find">find</h3>
+<blockquote>
+<p>Encontre arquivos ou diretórios recursivamente na árvore de diretórios fornecida. Mais informações: <a href="https://manned.org/find" class="uri">https://manned.org/find</a>.</p>
+</blockquote>
+<ul>
+<li>Encontre arquivos por extensão:</li>
+</ul>
+<p><code>find {{root_path}} -name '{{*.ext}}'</code></p>
+<ul>
+<li>Encontre arquivos que correspondam a vários padrões de caminho / nome:</li>
+</ul>
+<p><code>find {{root_path}} -path '{{**/path/**/*.ext}} -or -name '{{*pattern*}}'</code></p>
+<ul>
+<li>Encontre diretórios que correspondam a um determinado nome, no modo que não diferencia maiúsculas de minúsculas:</li>
+</ul>
+<p><code>find {{root_path}} -type d -iname '{{*lib*}}'</code></p>
+<ul>
+<li>Encontre arquivos que correspondam a um determinado padrão, excluindo caminhos específicos:</li>
+</ul>
+<p><code>find {{root_path}} -name '{{*.py}}' -not -path '{{*/site-packages/*}}'</code></p>
+<ul>
+<li>Encontre arquivos que correspondam a um determinado intervalo de tamanho:</li>
+</ul>
+<p><code>find {{root_path}} -size {{+500k}} -size {{-10M}}</code></p>
+<ul>
+<li>Execute um comando para cada arquivo (use <code>{}</code> dentro do comando para acessar o nome do arquivo):</li>
+</ul>
+<p><code>find {{root_path}} -name '{{*.ext}}' -exec {{wc -l {} }}\;</code></p>
+<ul>
+<li>Encontre arquivos modificados nos últimos 7 dias e exclua-os:</li>
+</ul>
+<p><code>find {{root_path}} -mtime -{{7}} -delete</code></p>
+<ul>
+<li>Encontre arquivos vazios (0 byte) e exclua-os:</li>
+</ul>
+<p><code>find {{root_path}} -type {{f}} -empty -delete</code></p>
+<h3 id="head">head</h3>
+<blockquote>
+<p>Exibir a primeira parte de um arquivo. Mais informações: <a href="https://www.gnu.org/software/coreutils/head" class="uri">https://www.gnu.org/software/coreutils/head</a>.</p>
+</blockquote>
+<ul>
+<li>Mostra as primeiras linhas de um arquivo:</li>
+</ul>
+<p><code>head -n {{count_of_lines}} {{filename}}</code></p>
+<ul>
+<li>Mostra tudo, exceto as últimas linhas de um arquivo:</li>
+</ul>
+<p><code>head -n -{{count_of_lines}} {{filename}}</code></p>
+<h3 id="locate">locate</h3>
+<blockquote>
+<p>Encontre nomes de arquivos rapidamente no índice mantido pelo sistema.</p>
+</blockquote>
+<ul>
+<li>Procure o padrão no banco de dados. Nota: o banco de dados é recalculado periodicamente (geralmente semanal ou diariamente):</li>
+</ul>
+<p><code>locate {{pattern}}</code></p>
+<ul>
+<li>Procure um arquivo pelo nome exato (um padrão que não contém caracteres globais é interpretado como <code>* padrão *</code>):</li>
+</ul>
+<p><code>locate */{{filename}}</code></p>
+<ul>
+<li>Recompute o banco de dados. Você precisa fazer isso se quiser encontrar os arquivos adicionados recentemente:</li>
+</ul>
+<p><code>sudo updatedb</code></p>
+<h3 id="ls">ls</h3>
+<blockquote>
+<p>Lista conteúdos de diretórios. Mais informações: <a href="https://www.gnu.org/software/coreutils/ls" class="uri">https://www.gnu.org/software/coreutils/ls</a>.</p>
+</blockquote>
+<ul>
+<li>Lista arquivos um por linha:</li>
+</ul>
+<p><code>ls -1</code></p>
+<ul>
+<li>Lista arquivos, incluíndo arquivos ocultos:</li>
+</ul>
+<p><code>ls -a</code></p>
+<ul>
+<li>Lista usando formato longo (permissões, proprietário , tamanho, e data de modificação de todos os arquivos.</li>
+</ul>
+<p><code>ls -la</code></p>
+<ul>
+<li>Lista usando formato longo com tamanho em KiB, MiB, GiB:</li>
+</ul>
+<p><code>ls -lh</code></p>
+<ul>
+<li>Lista com formato longo ordenado por tamanho (descendente):</li>
+</ul>
+<p><code>ls -lS</code></p>
+<ul>
+<li>Lista com formato longo, ordenado por data de modificação (mais velhos primeiro):</li>
+</ul>
+<p><code>ls -ltr</code></p>
+<ul>
+<li>Lista somente diretórios:</li>
+</ul>
+<p><code>ls -d {{*/}}</code></p>
+<h3 id="mkdir">mkdir</h3>
+<blockquote>
+<p>Cria um diretório. Mais informações: <a href="https://www.gnu.org/software/coreutils/mkdir" class="uri">https://www.gnu.org/software/coreutils/mkdir</a>.</p>
+</blockquote>
+<ul>
+<li>Cria um diretório no diretório corrente ou caminho que for passado:</li>
+</ul>
+<p><code>mkdir {{directory}}</code></p>
+<ul>
+<li>Cria diretórios recursivamente (útil para criação de diretórios aninhados):</li>
+</ul>
+<p><code>mkdir -p {{path/to/directory}}</code></p>
+<h3 id="mv">mv</h3>
+<blockquote>
+<p>Mover ou renomear arquivos e diretórios. Mais informações: <a href="https://www.gnu.org/software/coreutils/mv" class="uri">https://www.gnu.org/software/coreutils/mv</a>.</p>
+</blockquote>
+<ul>
+<li>Mova um arquivo para um local:</li>
+</ul>
+<p><code>mv {{source}} {{target}}</code></p>
+<ul>
+<li>Mova os arquivos para outro diretório, mantendo os nomes dos arquivos:</li>
+</ul>
+<p><code>mv {{source1}} {{source2}} {{source3}} {{target_directory}}</code></p>
+<ul>
+<li>Não solicite confirmação antes de sobrescrever os arquivos existentes:</li>
+</ul>
+<p><code>mv -f {{source}} {{target}}</code></p>
+<ul>
+<li>Solicitar confirmação antes de substituir os arquivos existentes, independentemente das permissões do arquivo:</li>
+</ul>
+<p><code>mv -i {{source}} {{target}}</code></p>
+<ul>
+<li>Não substitua os arquivos existentes no destino:</li>
+</ul>
+<p><code>mv -n {{source}} {{target}}</code></p>
+<ul>
+<li>Mova arquivos em modo verboso, mostrando os arquivos depois de movidos:</li>
+</ul>
+<p><code>mv -v {{source}} {{target}}</code></p>
+<h3 id="pwd">pwd</h3>
+<blockquote>
+<p>Mostra o nome do diretório atual. Mais informações: <a href="https://www.gnu.org/software/coreutils/pwd" class="uri">https://www.gnu.org/software/coreutils/pwd</a>.</p>
+</blockquote>
+<ul>
+<li>Mostra o diretório atual:</li>
+</ul>
+<p><code>pwd</code></p>
+<h3 id="rm">rm</h3>
+<blockquote>
+<p>Remover arquivos ou diretórios. Mais informações: <a href="https://www.gnu.org/software/coreutils/rm" class="uri">https://www.gnu.org/software/coreutils/rm</a>.</p>
+</blockquote>
+<ul>
+<li>Remova arquivos de locais arbitrários:</li>
+</ul>
+<p><code>rm {{path/to/file}} {{path/to/another/file}}</code></p>
+<ul>
+<li>Remova recursivamente um diretório e todos os seus subdiretórios:</li>
+</ul>
+<p><code>rm -r {{path/to/directory}}</code></p>
+<ul>
+<li>Remova um diretório à força, sem solicitar confirmação ou mostrar mensagens de erro:</li>
+</ul>
+<p><code>rm -rf {{path/to/directory}}</code></p>
+<ul>
+<li>Remova vários arquivos interativamente, com um prompt antes de cada remoção:</li>
+</ul>
+<p><code>rm -i {{file(s)}}</code></p>
+<ul>
+<li>Remova arquivos no modo detalhado, imprimindo uma mensagem para cada arquivo removido:</li>
+</ul>
+<p><code>rm -v {{path/to/directory/*}}</code></p>
+<h3 id="tail">Tail</h3>
+<blockquote>
+<p>Exibir a última parte de um arquivo. Mais informações: <a href="https://www.gnu.org/software/coreutils/tail" class="uri">https://www.gnu.org/software/coreutils/tail</a>.</p>
+</blockquote>
+<ul>
+<li>Mostrar as últimas ‘num’ linhas no arquivo:</li>
+</ul>
+<p><code>tail -n {{num}} {{file}}</code></p>
+<ul>
+<li>Mostrar todos os arquivos desde a linha ‘num’:</li>
+</ul>
+<p><code>tail -n +{{num}} {{file}}</code></p>
+<ul>
+<li>Permaneça lendo o arquivo até <code>Ctrl + C</code>:</li>
+</ul>
+<p><code>tail -f {{file}}</code></p>
+<ul>
+<li>Continue lendo o arquivo até <code>Ctrl + C</code>, mesmo se o arquivo for rotado:</li>
+</ul>
+<p><code>tail -F {{file}}</code></p>
+<ul>
+<li>Mostra as últimas ‘num’ linhas em ‘arquivo’ e atualiza a cada ‘n’ segundos:</li>
+</ul>
+<p><code>tail -n {{num}} -s {{n}} -f {{file}}</code></p>
+<h3 id="tar">tar</h3>
+<blockquote>
+<p>Utilitário de arquivação. Frequentemente combinado com um método de compactação, como gzip ou bzip2. Mais informações: <a href="https://www.gnu.org/software/tar" class="uri">https://www.gnu.org/software/tar</a>.</p>
+</blockquote>
+<ul>
+<li>Cria um arquivo tar e o envia para um arquivo:</li>
+</ul>
+<p><code>tar cf {{target.tar}} {{file1}} {{file2}} {{file3}}</code></p>
+<ul>
+<li>Cria um arquivo gzip a partir de arquivos:</li>
+</ul>
+<p><code>tar czf {{target.tar.gz}} {{file1}} {{file2}} {{file3}}</code></p>
+<ul>
+<li>crie um arquivo g [z] ipped a partir de um diretório usando caminhos relativos:</li>
+</ul>
+<p><code>tar czf {{target.tar.gz}} --directory={{path/to/directory}} .</code></p>
+<ul>
+<li>Extraia um arquivo (compactado) para o diretório atual em modo verboso:</li>
+</ul>
+<p><code>tar xvf {{source.tar[.gz|.bz2|.xz]}}</code></p>
+<ul>
+<li>Extraia um arquivo (compactado) no diretório de destino:</li>
+</ul>
+<p><code>tar xf {{source.tar[.gz|.bz2|.xz]}} --directory={{directory}}</code></p>
+<h3 id="tee">tee</h3>
+<blockquote>
+<p>Ler da entrada padrão e envia para a saída e arquivos padrão (ou comandos). Mais informações: <a href="https://www.gnu.org/software/coreutils/tee" class="uri">https://www.gnu.org/software/coreutils/tee</a>.</p>
+</blockquote>
+<ul>
+<li>Copie o stdin para cada ARQUIVO e também para a saída padrão:</li>
+</ul>
+<p><code>echo "example" | tee {{FILE}}</code></p>
+<ul>
+<li>Anexar aos ARQUIVOS fornecidos, não sobrescrever:</li>
+</ul>
+<p><code>echo "example" | tee -a {{FILE}}</code></p>
+<ul>
+<li>Imprima a entrada padrão para o terminal e também canalize-a para outro programa para processamento posterior:</li>
+</ul>
+<p><code>echo "example" | tee {{/dev/tty}} | {{xargs printf "[%s]"}}</code></p>
+<h3 id="touch">touch</h3>
+<blockquote>
+<p>Altere os tempos de acesso e modificação de um arquivo (atime, mtime). Mais informações: <a href="https://www.gnu.org/software/coreutils/touch" class="uri">https://www.gnu.org/software/coreutils/touch</a>.</p>
+</blockquote>
+<ul>
+<li>Crie um (s) novo (s) arquivo (s) vazio (s) ou altere os horários dos arquivos existentes para o horário atual:</li>
+</ul>
+<p><code>touch {{filename}}</code></p>
+<ul>
+<li>Defina os horários em um arquivo para uma data e hora específicas:</li>
+</ul>
+<p><code>touch -t {{YYYYMMDDHHMM.SS}} {{filename}}</code></p>
+<ul>
+<li>Use os tempos de um arquivo para definir os tempos de um segundo arquivo:</li>
+</ul>
+<p><code>touch -r {{filename}} {{filename2}}</code></p>
+<ul>
+<li>Crie vários arquivos:</li>
+</ul>
+<p><code>touch {{file{1,2,3}.txt}}</code></p>
+<h3 id="tree">tree</h3>
+<blockquote>
+<p>Exibe o conteúdo do diretório atual em formato de árvore. Mais informações: <a href="https://guialinux.uniriotec.br/tree/" class="uri">https://guialinux.uniriotec.br/tree/</a>.</p>
+</blockquote>
+<ul>
+<li>Exibe os arquivos e diretórios de acordo com o nível de profundidade ‘num’ informado (onde 1 significa o diretório atual):</li>
+</ul>
+<p><code>tree -L {{num}}</code></p>
+<ul>
+<li>Exibe apenas diretórios:</li>
+</ul>
+<p><code>tree -d</code></p>
+<ul>
+<li>Inclui a exibição de arquivos ocultos com colorização diferenciada:</li>
+</ul>
+<p><code>tree -a -C</code></p>
+<ul>
+<li>Exibe a árvore sem identação, mostrando o caminho completo (usar <code>-N</code> para não escapar espaços em branco e caracteres especiais):</li>
+</ul>
+<p><code>tree -i -f</code></p>
+<ul>
+<li>Exibe o tamanho de cada arquivo e o tamanho acumulado de cada diretório, em um formato de leitura para humanos:</li>
+</ul>
+<p><code>tree -s -h --du</code></p>
+<ul>
+<li>Exibe arquivos em uma árvore hierárquica, utilizando um padrão coringa, e eliminando diretórios que não contêm arquivos correspondentes ao informado:</li>
+</ul>
+<p><code>tree -P '{{*.txt}}' --prune</code></p>
+<ul>
+<li>Exibe diretórios em uma árvore hierárquica, utilizando um padrão coringa, e eliminando diretórios que não possuem ancestrais do informado:</li>
+</ul>
+<p><code>tree -P {{nome_diretorio}} --matchdirs --prune</code></p>
+<ul>
+<li>Exibe a árvore ignorando os diretórios informados:</li>
+</ul>
+<p><code>tree -I '{{nome_diretorio1|nome_diretorio2}}'</code></p>
+<h2 id="filters">Filtros de texto</h2>
+<h3 id="awk">awk</h3>
+<blockquote>
+<p>Uma linguagem de programação versátil para trabalhar com arquivos. Mais informações: <a href="https://github.com/onetrueawk/awk" class="uri">https://github.com/onetrueawk/awk</a>.</p>
+</blockquote>
+<ul>
+<li>Imprima a quinta coluna (campo) em um arquivo separado por espaço:</li>
+</ul>
+<p><code>awk '{print $5}' {{filename}}</code></p>
+<ul>
+<li>Imprime a segunda coluna das linhas contendo “foo” em um arquivo separado por espaço:</li>
+</ul>
+<p><code>awk '/{{foo}}/ {print $2}' {{filename}}</code></p>
+<ul>
+<li>Imprima a última coluna de cada linha em um arquivo, usando uma vírgula (em vez de espaço) como separador de campo:</li>
+</ul>
+<p><code>awk -F ',' '{print $NF}' {{filename}}</code></p>
+<ul>
+<li>Some os valores na primeira coluna de um arquivo e imprima o total:</li>
+</ul>
+<p><code>awk '{s+=$1} END {print s}' {{filename}}</code></p>
+<ul>
+<li>Imprima a cada terceira linha a partir da primeira linha:</li>
+</ul>
+<p><code>awk 'NR%3==1' {{filename}}</code></p>
+<ul>
+<li>Imprima valores diferentes com base nas condições:</li>
+</ul>
+<p>`awk ’{if ($1 == “foo”) print “Exact match foo”; else if ($1 ~ “bar”) print</p>
+<ul>
+<li>Imprime todas as linhas em que o valor da 10ª coluna é igual ao valor especificado:</li>
+</ul>
+<p><code>awk '($10 == value)'</code></p>
+<ul>
+<li>Imprima todas as linhas cujo valor da 10ª coluna está entre um mínimo e um máximo:</li>
+</ul>
+<p><code>awk '($10 &gt;= min_value &amp;&amp; $10 &lt;= max_value)'</code></p>
+<h3 id="cut">cut</h3>
+<blockquote>
+<p>Recorte campos do stdin ou de arquivos. Mais informações: <a href="https://www.gnu.org/software/coreutils/cut" class="uri">https://www.gnu.org/software/coreutils/cut</a>.</p>
+</blockquote>
+<ul>
+<li>Corte os primeiros dezesseis caracteres de cada linha do stdin:</li>
+</ul>
+<p><code>cut -c {{1-16}}</code></p>
+<ul>
+<li>Corte os primeiros dezesseis caracteres de cada linha dos arquivos fornecidos:</li>
+</ul>
+<p><code>cut -c {{1-16}} {{file}}</code></p>
+<ul>
+<li>Corte tudo desde o terceiro caractere até o final de cada linha:</li>
+</ul>
+<p><code>cut -c {{3-}}</code></p>
+<ul>
+<li>Corte o quinto campo de cada linha, usando dois pontos como delimitador de campo (o delimitador padrão é tabulação):</li>
+</ul>
+<p><code>cut -d'{{:}}' -f{{5}}</code></p>
+<ul>
+<li>Recorte o 2º e o 10º campos de cada linha, usando um ponto e vírgula como delimitador:</li>
+</ul>
+<p><code>cut -d'{{;}}' -f{{2,10}}</code></p>
+<ul>
+<li>Recorte os campos de 3 até o final de cada linha, usando um espaço como delimitador:</li>
+</ul>
+<p><code>cut -d'{{ }}' -f{{3-}}</code></p>
+<h3 id="grep">grep</h3>
+<blockquote>
+<p>Encontre padrões em arquivos usando expressões regulares. Mais informações: <a href="https://www.gnu.org/software/grep/manual/grep.html" class="uri">https://www.gnu.org/software/grep/manual/grep.html</a>.</p>
+</blockquote>
+<ul>
+<li>Procure um padrão dentro de um arquivo:</li>
+</ul>
+<p><code>grep "{{search_pattern}}" {{path/to/file}}</code></p>
+<ul>
+<li>Pesquise uma string exata (desativa as expressões regulares):</li>
+</ul>
+<p><code>grep --fixed-strings "{{exact_string}}" {{path/to/file}}</code></p>
+<ul>
+<li>Imprima 3 linhas de contexto ao redor, antes ou depois de cada match:</li>
+</ul>
+<p><code>grep --{{context|before-context|after-context}}={{3}} "{{search_pattern}}" {{path/to/file}}</code></p>
+<ul>
+<li>Imprimir o nome do arquivo e o número da linha para cada correspondência:</li>
+</ul>
+<p><code>grep --with-filename --line-number "{{search_pattern}}" {{path/to/file}}</code></p>
+<ul>
+<li>Pesquise stdin por linhas que não correspondam a um padrão:</li>
+</ul>
+<p><code>cat {{path/to/file}} | grep --invert-match "{{search_pattern}}"</code></p>
+<ul>
+<li>Procure linhas que correspondam a um padrão, imprimindo apenas o texto correspondente:</li>
+</ul>
+<p><code>grep --only-matching "{{search_pattern}}" {{path/to/file}}</code></p>
+<ul>
+<li>Procure um padrão em todos os arquivos recursivamente em um diretório, mostrando os números das linhas de correspondências, ignorando os arquivos binários:</li>
+</ul>
+<p><code>grep --recursive --line-number --binary-files={{without-match}} "{{search_pattern}}" {{path/to/directory}}</code></p>
+<ul>
+<li>Use expressões regulares estendidas (suporta <code>?</code>, <code>+</code>, <code>{}</code>, <code>()</code> E <code>|</code>), no modo sem distinção entre maiúsculas e minúsculas:</li>
+</ul>
+<p><code>grep --extended-regexp --ignore-case "{{search_pattern}}" {{path/to/file}}</code></p>
+<h3 id="sed">sed</h3>
+<blockquote>
+<p>Edite textos de forma programável. Mais informações: <a href="https://man.archlinux.org/man/sed.1" class="uri">https://man.archlinux.org/man/sed.1</a>.</p>
+</blockquote>
+<ul>
+<li>Substitua a primeira ocorrência de uma expressão regular em cada linha de um arquivo e imprima o resultado:</li>
+</ul>
+<p><code>sed 's/{{regular_expression}}/{{replace}}/' {{filename}}</code></p>
+<ul>
+<li>Substitua todas as ocorrências de uma expressão regular estendida em um arquivo e imprima o resultado:</li>
+</ul>
+<p><code>sed -r 's/{{regular_expression}}/{{replace}}/g' {{filename}}</code></p>
+<ul>
+<li>Substitua todas as ocorrências de uma string em um arquivo, sobrescrevendo o arquivo (ou seja, in-place:</li>
+</ul>
+<p><code>sed -i 's/{{find}}/{{replace}}/g' {{filename}}</code></p>
+<ul>
+<li>Substitua apenas nas linhas que correspondem ao padrão de linha:</li>
+</ul>
+<p><code>sed '/{{line_pattern}}/s/{{find}}/{{replace}}/' {{filename}}</code></p>
+<ul>
+<li>Exclua as linhas que correspondem ao padrão de linha:</li>
+</ul>
+<p><code>sed '/{{line_pattern}}/d' {{filename}}</code></p>
+<ul>
+<li>Imprima as primeiras 11 linhas de um arquivo:</li>
+</ul>
+<p><code>sed 11q {{filename}}</code></p>
+<ul>
+<li>Aplique várias expressões localizar-substituir a um arquivo:</li>
+</ul>
+<p><code>sed -e 's/{{find}}/{{replace}}/' -e 's/{{find}}/{{replace}}/' {{filename}}</code></p>
+<ul>
+<li>Substitua o separador <code>/</code> por qualquer outro caractere não usado nos padrões de localização ou substituição, por exemplo, <code>#</code>:</li>
+</ul>
+<p><code>sed 's#{{find}}#{{replace}}#' {{filename}}</code></p>
+<h2 id="users">Gerenciamento de usuários</h2>
+<h3 id="adduser">adduser</h3>
+<blockquote>
+<p>Utilitário para criação de novos usuários. Mais informações: <a href="https://manpages.debian.org/latest/adduser/adduser.html" class="uri">https://manpages.debian.org/latest/adduser/adduser.html</a>.</p>
+</blockquote>
+<ul>
+<li>Criar um novo usuário, o seu diretório na pasta home e solicitar o preenchimento da sua senha:</li>
+</ul>
+<p><code>adduser {{nome_do_usuario}}</code></p>
+<ul>
+<li>Criar um novo usuário sem o seu diretório na pasta home:</li>
+</ul>
+<p><code>adduser --no-create-home {{nome_do_usuario}}</code></p>
+<ul>
+<li>Criar um novo usuário especificando a localização do seu diretório:</li>
+</ul>
+<p><code>adduser --home {{caminho_da_pasta_do_usuario}} {{nome_do_usuario}}</code></p>
+<ul>
+<li>Criar um novo usuário e configurar o seu shell de login:</li>
+</ul>
+<p><code>adduser --shell {{caminho_para_o_shell}} {{nome_do_usuario}}</code></p>
+<ul>
+<li>Criar um novo usuário e atribuí-lo a um grupo:</li>
+</ul>
+<p><code>adduser --ingroup {{grupo}} {{nome_do_usuario}}</code></p>
+<h2 id="utils">Utilitários</h2>
+<h3 id="apt">apt</h3>
+<blockquote>
+<p>Utilitário de gerenciamento de pacotes para distribuições baseadas em Debian. Substituição recomendada para apt-get quando usado interativamente nas versões 16.04 e posteriores do Ubuntu. Mais informações: <a href="https://manpages.debian.org/latest/apt/apt.8.html" class="uri">https://manpages.debian.org/latest/apt/apt.8.html</a>.</p>
+</blockquote>
+<ul>
+<li>Atualize a lista de pacotes e versões disponíveis (é recomendado executar isso antes de outros comandos <code>apt</code>):</li>
+</ul>
+<p><code>sudo apt update</code></p>
+<ul>
+<li>Procure um pacote:</li>
+</ul>
+<p><code>apt search {{package}}</code></p>
+<ul>
+<li>Exiba informações sobre um pacote:</li>
+</ul>
+<p><code>apt show {{package}}</code></p>
+<ul>
+<li>Instale um pacote ou o atualize para a versão mais recente disponível:</li>
+</ul>
+<p><code>sudo apt install {{package}}</code></p>
+<ul>
+<li>Remova um pacote (usando <code>purge</code> também remove seus arquivos de configuração):</li>
+</ul>
+<p><code>sudo apt remove {{package}}</code></p>
+<ul>
+<li>Atualize todos os pacotes instalados para suas versões mais recentes disponíveis:</li>
+</ul>
+<p><code>sudo apt upgrade</code></p>
+<ul>
+<li>Liste todos os pacotes:</li>
+</ul>
+<p><code>apt list</code></p>
+<ul>
+<li>Listar pacotes instalados:</li>
+</ul>
+<p><code>apt list --installed</code></p>
+<h3 id="calc">calc</h3>
+<blockquote>
+<p>Calculadora interativa de precisão arbitrária no terminal. Mais informações: <a href="https://github.com/lcn2/calc" class="uri">https://github.com/lcn2/calc</a>.</p>
+</blockquote>
+<ul>
+<li>Iniciar a calculadora em modo interativo:</li>
+</ul>
+<p><code>calc</code></p>
+<ul>
+<li>Realizar o cálculo em modo não interativo:</li>
+</ul>
+<p><code>calc -p '{{85 * (36 / 4)}}'</code></p>
+<h3 id="clear">clear</h3>
+<blockquote>
+<p>Limpa a tela do terminal. Mais informações: <a href="https://manned.org/clear" class="uri">https://manned.org/clear</a>.</p>
+</blockquote>
+<ul>
+<li>Limpar a tela (equivalente a apertar Control-L no terminal Bash):</li>
+</ul>
+<p><code>clear</code></p>
+<ul>
+<li>Limpar a tela mantendo o buffer de rolagem do terminal:</li>
+</ul>
+<p><code>clear -x</code></p>
+<ul>
+<li>Especificar o tipo de terminal a ser limpado (por padrão é o valor da variável de ambiente <code>TERM</code>):</li>
+</ul>
+<p><code>clear -T {{tipo_do_terminal}}</code></p>
+<ul>
+<li>Mostra a versão do <code>ncurses</code> usado pelo <code>clear</code>:</li>
+</ul>
+<p><code>clear -V</code></p>
+<h3 id="curl">curl</h3>
+<blockquote>
+<p>Transfere dados de ou para um servidor. Suporta a maioria dos protocolos, incluindo HTTP, FTP e POP3. Mais informações: <a href="https://curl.se" class="uri">https://curl.se</a>.</p>
+</blockquote>
+<ul>
+<li>Baixe o conteúdo de um URL para um arquivo:</li>
+</ul>
+<p><code>curl {{http://example.com}} --output {{filename}}</code></p>
+<ul>
+<li>Baixe um arquivo, salvando a saída com o nome do arquivo indicado pelo URL:</li>
+</ul>
+<p><code>curl --remote-name {{http://example.com/filename}}</code></p>
+<ul>
+<li>Baixe um arquivo, seguindo os redirecionamentos de localização e continuando automaticamente (retomando) uma transferência de arquivo anterior:</li>
+</ul>
+<p><code>curl --remote-name --location --continue-at - {{http://example.com/filename}}</code></p>
+<h3 id="htop">htop</h3>
+<blockquote>
+<p>Apresenta informações em tempo real sobre processos em execução. Uma versão melhorada do top. Mais informações: <a href="https://htop.dev/" class="uri">https://htop.dev/</a>.</p>
+</blockquote>
+<ul>
+<li>Inicia htop:</li>
+</ul>
+<p><code>htop</code></p>
+<ul>
+<li>Inicia htop mostrando os processos pertencentes a um usuário específico:</li>
+</ul>
+<p><code>htop --username {{username}}</code></p>
+<ul>
+<li>Ordena processos por um <code>sort_item</code> especificado (use <code>htop --help</code> para mais opções):</li>
+</ul>
+<p><code>htop --sort {{sort_item}}</code></p>
+<ul>
+<li>Veja os comandos interativos enquanto o htop estiver executando:</li>
+</ul>
+<p><code>?</code></p>
+<ul>
+<li>Mostrar ajuda:</li>
+</ul>
+<p><code>htop --help</code></p>
+<h3 id="ip">ip</h3>
+<blockquote>
+<p>Exibir / manipular roteamento, dispositivos, políticas de roteamento e túneis. Mais informações: <a href="https://www.man7.org/linux/man-pages/man8/ip.8.html" class="uri">https://www.man7.org/linux/man-pages/man8/ip.8.html</a>.</p>
+</blockquote>
+<ul>
+<li>Listar interfaces com informações detalhadas:</li>
+</ul>
+<p><code>ip address</code></p>
+<ul>
+<li>Lista as interfaces com breves informações da camada de rede:</li>
+</ul>
+<p><code>ip -brief address</code></p>
+<ul>
+<li>Listar interfaces com breves informações da camada de link:</li>
+</ul>
+<p><code>ip -brief link</code></p>
+<ul>
+<li>Exibir a tabela de roteamento:</li>
+</ul>
+<p><code>ip route</code></p>
+<ul>
+<li>Ative (up) ou desative (down) uma interface:</li>
+</ul>
+<p><code>ip link set {{interface}} up/down</code></p>
+<ul>
+<li>Adicionar / excluir um endereço IP de uma interface:</li>
+</ul>
+<p><code>ip addr add/del {{ip}}/{{mask}} dev {{interface}}</code></p>
+<ul>
+<li>Adiciona uma rota padrão:</li>
+</ul>
+<p><code>ip route add default via {{ip}} dev {{interface}}</code></p>
+<h3 id="kill">kill</h3>
+<blockquote>
+<p>Envia um sinal para um processo, geralmente para finalizar o processo. Todos os sinais exceto pelo SIGKILL e SIGSTOP podem ser interceptados pelo processo para finalizar de forma limpa.</p>
+</blockquote>
+<ul>
+<li>Finaliza um programa usando o sinal default SIGTERM (terminate):</li>
+</ul>
+<p><code>kill {{id_do_processo}}</code></p>
+<ul>
+<li>Lista todos os nomes dos sinais disponíveis (para serem usados sem o prefixo <code>SIG</code>):</li>
+</ul>
+<p><code>kill -l</code></p>
+<ul>
+<li>Finaliza um processo em background:</li>
+</ul>
+<p><code>kill %{{id_do_processo}}</code></p>
+<ul>
+<li>Finaliza um programa usando o sinal SIGHUP. Muitos daemons vão recarregar ao invés de finalizar:</li>
+</ul>
+<p><code>kill -{{1|HUP}} {{id_do_processo}}</code></p>
+<ul>
+<li>Finaliza um programa usando o sinal SIGINT (interrupt). Isto é tipicamente iniciado pelo usuário ao pressionar <code>Ctrl + C</code>:</li>
+</ul>
+<p><code>kill -{{2|INT}} {{id_do_processo}}</code></p>
+<ul>
+<li>Envia sinal para o sistema operacional para finalizar imediatamente o programa (quem não tem chance de capturar o sinal):</li>
+</ul>
+<p><code>kill -{{9|KILL}} {{id_do_processo}}</code></p>
+<ul>
+<li>Envia sinal para o sistema operacional para pausar o programa até um sinal SIGCONT (“continue”) seja recebido:</li>
+</ul>
+<p><code>kill -{{17|STOP}} {{id_do_processo}}</code></p>
+<ul>
+<li>Envia um sinal <code>SIGUSR1</code> para todos os processos de um dado GID (group id):</li>
+</ul>
+<p><code>kill -{{SIGUSR1}} -{{id_do_grupo}}</code></p>
+<h3 id="lsof">lsof</h3>
+<blockquote>
+<p>Lista os arquivos abertos e seus processos. Nota: Privilégios de root (ou sudo) são necessários para listar arquivos abertos por outras pessoas.</p>
+</blockquote>
+<ul>
+<li>Encontre os processos que têm um determinado arquivo aberto:</li>
+</ul>
+<p><code>lsof {{path/to/file}}</code></p>
+<ul>
+<li>Encontre o processo que abriu uma porta de Internet local:</li>
+</ul>
+<p><code>lsof -i :{{port}}</code></p>
+<ul>
+<li>Exiba apenas o ID do processo (PID):</li>
+</ul>
+<p><code>lsof -t {{path/to/file}}</code></p>
+<ul>
+<li>Listar arquivos abertos por determinado usuário:</li>
+</ul>
+<p><code>lsof -u {{username}}</code></p>
+<ul>
+<li>Liste os arquivos abertos por um determinado comando ou processo:</li>
+</ul>
+<p><code>lsof -c {{process_or_command_name}}</code></p>
+<ul>
+<li>Listar arquivos abertos por um determinado processo, dado seu PID:</li>
+</ul>
+<p><code>lsof -p {{PID}}</code></p>
+<ul>
+<li>Listar arquivos abertos em um diretório:</li>
+</ul>
+<p><code>lsof +D {{path/to/directory}}</code></p>
+<ul>
+<li>Encontre o processo que está escutando em uma porta TCP local:</li>
+</ul>
+<p><code>lsof -iTCP:{{port}} -sTCP:LISTEN</code></p>
+<h3 id="mail">mail</h3>
+<blockquote>
+<p>O comando opera na caixa de e-mails do usuário se nenhum argumento for fornecido. Para enviar um e-mail, o corpo da mensagem é obtido a partir da entrada padrão.</p>
+</blockquote>
+<ul>
+<li>Envie uma mensagem de e-mail digitada. A linha de comando abaixo continua após pressionar a tecla Enter. Insira o id do e-mail CC (opcional) e pressione a tecla Enter. Texto da mensagem de entrada (pode ser várias linhas). Pressione a tecla Ctrl-D para completar o texto da mensagem:</li>
+</ul>
+<p><code>mail --subject="{{subject line}}" {{to_user@example.com}}</code></p>
+<ul>
+<li>Envie um e-mail com o conteúdo do arquivo:</li>
+</ul>
+<p><code>mail --subject="{{$HOSTNAME filename.txt}}" {{to_user@example.com}} &lt; {{path/to/filename.txt}}</code></p>
+<ul>
+<li>Envie um arquivo <code>tar.gz</code> como um anexo:</li>
+</ul>
+<p><code>tar cvzf - {{path/to/directory1 path/to/directory2}} | uuencode {{data.tar.gz}} | mail --subject="{{subject_line}}" {{to_user@example.com}}</code></p>
+<h3 id="ping">ping</h3>
+<blockquote>
+<p>Envie pacotes ICMP ECHO_REQUEST para hosts de rede.</p>
+</blockquote>
+<ul>
+<li>Ping em um host:</li>
+</ul>
+<p><code>ping {{host}}</code></p>
+<ul>
+<li>Faça ping em um host um número específico de vezes:</li>
+</ul>
+<p><code>ping -c {{count}} {{host}}</code></p>
+<ul>
+<li>Faça ping em host, especificando o intervalo em segundos entre as solicitações (o padrão é 1 segundo):</li>
+</ul>
+<p><code>ping -i {{seconds}} {{host}}</code></p>
+<ul>
+<li>Faça ping no host sem tentar procurar nomes simbólicos para endereços:</li>
+</ul>
+<p><code>ping -n {{host}}</code></p>
+<h3 id="uname">uname</h3>
+<blockquote>
+<p>Apresenta detalhes sobre o hardware e sistema operacional do computador. Nota: Para maiores detalhes sobre o sistema operacional, utilize o comando <code>lsb_release</code>. Mais informações: <a href="https://www.gnu.org/software/coreutils/uname" class="uri">https://www.gnu.org/software/coreutils/uname</a>.</p>
+</blockquote>
+<ul>
+<li>Exibir informações relacionadas ao hardware: arquitetura e tipo de processador:</li>
+</ul>
+<p><code>uname -mp</code></p>
+<ul>
+<li>Exibir informações relacionadas ao software: sistema operacional, número da release e versão:</li>
+</ul>
+<p><code>uname -srv</code></p>
+<ul>
+<li>Exibir o nome de rede do computador:</li>
+</ul>
+<p><code>uname -n</code></p>
+<ul>
+<li>Exibir todas as informações disponíveis do sistema (hardware, software, nome de rede):</li>
+</ul>
+<p><code>uname -a</code></p>
+<h3 id="unzip">unzip</h3>
+<blockquote>
+<p>Ferramenta de descompactação de arquivos zip.</p>
+</blockquote>
+<ul>
+<li>Extraindo arquivos zip:</li>
+</ul>
+<p><code>unzip {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip para caminhos específicos:</li>
+</ul>
+<p><code>unzip {{arquivo.zip}} -d {{caminho/para}}</code></p>
+<ul>
+<li>Listando conteúdos de arquivos zip:</li>
+</ul>
+<p><code>unzip -l {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip sobrescrevendo outros arquivos:</li>
+</ul>
+<p><code>unzip -o {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip não sobrescrevendo outros arquivos:</li>
+</ul>
+<p><code>unzip -n {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip sem a estrutura dos diretórios:</li>
+</ul>
+<p><code>unzip -j {{arquivo.zip}}</code></p>
+<h3 id="wget">wget</h3>
+<blockquote>
+<p>Baixe arquivos da web. Suporta HTTP, HTTPS e FTP. Mais informações: <a href="https://www.gnu.org/software/wget" class="uri">https://www.gnu.org/software/wget</a>.</p>
+</blockquote>
+<ul>
+<li>Baixe o conteúdo de um URL para um arquivo (denominado “foo” neste caso):</li>
+</ul>
+<p><code>wget {{https://example.com/foo}}</code></p>
+<ul>
+<li>Baixe o conteúdo de um URL para um arquivo (denominado “bar” neste caso):</li>
+</ul>
+<p><code>wget --output-document {{bar}} {{https://example.com/foo}}</code></p>
+<ul>
+<li>Baixe uma única página da web e todos os seus recursos com intervalos de 3 segundos entre as solicitações (scripts, folhas de estilo, imagens, etc.):</li>
+</ul>
+<p><code>wget --page-requisites --convert-links --wait=3 {{https://example.com/somepage.html}}</code></p>
+<ul>
+<li>Baixe todos os arquivos listados dentro de um diretório e seus subdiretórios (não baixa elementos de página incorporados):</li>
+</ul>
+<p><code>wget --mirror --no-parent {{https://example.com/somepath/}}</code></p>
+<ul>
+<li>Limite a velocidade de download e o número de tentativas de conexão:</li>
+</ul>
+<p><code>wget --limit-rate={{300k}} --tries={{100}} {{https://example.com/somepath/}}</code></p>
+<h3 id="zip">zip</h3>
+<blockquote>
+<p>Ferramenta de compressão de arquivos em arquivos zip.</p>
+</blockquote>
+<ul>
+<li>Compactando arquivos em um arquivo zip:</li>
+</ul>
+<p><code>zip {{output.zip}} {{arquivo1}} {{arquivo2}} {{arquivo3}}</code></p>
+<ul>
+<li>Compactando todos os arquivos de um diretório:</li>
+</ul>
+<p><code>zip {{output.zip}} {{caminho/do/diretorio/*}}</code></p>
+<ul>
+<li>Adicionando arquivos a um arquivo zip existente:</li>
+</ul>
+<p><code>zip {{arquivo_existente.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Compactando todos os arquivos de um diretório mantendo estruturas de diretórios:</li>
+</ul>
+<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Compactando arquivos de um diretório excluindo arquivos específicos:</li>
+</ul>
+<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}} -x {{caminho/a/ser/excluido}}</code></p>
+<ul>
+<li>Compactando arquivos definindo o nível de compressão [9]:</li>
+</ul>
+<p><code>zip -r -{{9}} {{output.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Deletando arquivos de um arquivo zip:</li>
+</ul>
+<p><code>zip -d {{output.zip}} "{{foo/*.ext}}"</code></p>
+</body>
+</html>
