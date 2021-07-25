@@ -11,7 +11,7 @@
 
 `sed -r 's/{{regular_expression}}/{{replace}}/g' {{filename}}`
 
-- Substitua todas as ocorrências de uma string em um arquivo, sobrescrevendo o arquivo (ou seja, in-place:
+- Substitua todas as ocorrências de um texto em um arquivo, sobrescrevendo o arquivo (ou seja, in-place:
 
 `sed -i 's/{{find}}/{{replace}}/g' {{filename}}`
 

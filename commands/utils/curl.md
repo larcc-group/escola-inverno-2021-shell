@@ -4,7 +4,7 @@
 > Suporta a maioria dos protocolos, incluindo HTTP, FTP e POP3.
 > Mais informações: <https://curl.se>.
 
-- Baixe o conteúdo de um URL para um arquivo:
+- Baixe o conteúdo de uma URL para um arquivo:
 
 `curl {{http://example.com}} --output {{filename}}`
 

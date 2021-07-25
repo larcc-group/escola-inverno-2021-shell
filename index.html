@@ -452,7 +452,7 @@
 </ul>
 <p><code>grep "{{search_pattern}}" {{path/to/file}}</code></p>
 <ul>
-<li>Pesquise uma string exata (desativa as expressões regulares):</li>
+<li>Pesquise um texto (string) exato (desativa as expressões regulares):</li>
 </ul>
 <p><code>grep --fixed-strings "{{exact_string}}" {{path/to/file}}</code></p>
 <ul>
@@ -492,7 +492,7 @@
 </ul>
 <p><code>sed -r 's/{{regular_expression}}/{{replace}}/g' {{filename}}</code></p>
 <ul>
-<li>Substitua todas as ocorrências de uma string em um arquivo, sobrescrevendo o arquivo (ou seja, in-place:</li>
+<li>Substitua todas as ocorrências de um texto em um arquivo, sobrescrevendo o arquivo (ou seja, in-place:</li>
 </ul>
 <p><code>sed -i 's/{{find}}/{{replace}}/g' {{filename}}</code></p>
 <ul>
@@ -540,6 +540,55 @@
 <li>Criar um novo usuário e atribuí-lo a um grupo:</li>
 </ul>
 <p><code>adduser --ingroup {{grupo}} {{nome_do_usuario}}</code></p>
+<h1 id="chmod">chmod</h1>
+<blockquote>
+<p>Altere as permissões de acesso de um arquivo ou diretório. Mais informações: <a href="https://www.gnu.org/software/coreutils/chmod" class="uri">https://www.gnu.org/software/coreutils/chmod</a>.</p>
+</blockquote>
+<ul>
+<li>Conceda ao usuário que possui um arquivo o direito de executá-lo:</li>
+</ul>
+<p><code>chmod u+x {{file}}</code></p>
+<ul>
+<li>Conceda ao usuário direitos de leitura e escrita em um arquivo / diretório:</li>
+</ul>
+<p><code>chmod u+rw {{file_or_directory}}</code></p>
+<ul>
+<li>Remove os direitos de execução do grupo:</li>
+</ul>
+<p><code>chmod g-x {{file}}</code></p>
+<ul>
+<li>Conceda a todos os usuários direitos de leitura e escrita:</li>
+</ul>
+<p><code>chmod a+rx {{file}}</code></p>
+<ul>
+<li>Give others (not in the file owner’s group) the same rights as the group:</li>
+<li>Conceda a outros usuários (que não estão no grupo do proprietário do arquivo) os mesmos direitos que o grupo:</li>
+</ul>
+<p><code>chmod o=g {{file}}</code></p>
+<ul>
+<li>Remova todos os direitos de outros usuários:</li>
+</ul>
+<p><code>chmod o= {{file}}</code></p>
+<h1 id="passwd">passwd</h1>
+<blockquote>
+<p>Alterar a senha de um usuário.</p>
+</blockquote>
+<ul>
+<li>Altere a senha do usuário interativamente:</li>
+</ul>
+<p><code>passwd</code></p>
+<ul>
+<li>Alterar a senha de um usuário específico:</li>
+</ul>
+<p><code>passwd {{username}}</code></p>
+<ul>
+<li>Obtenha o status atual do usuário:</li>
+</ul>
+<p><code>passwd -S</code></p>
+<ul>
+<li>Faça com que a senha da conta fique em branco (isso definirá uma conta sem senha):</li>
+</ul>
+<p><code>passwd -d</code></p>
 <h2 id="utils">Utilitários</h2>
 <h3 id="apt">apt</h3>
 <blockquote>
@@ -614,7 +663,7 @@
 <p>Transfere dados de ou para um servidor. Suporta a maioria dos protocolos, incluindo HTTP, FTP e POP3. Mais informações: <a href="https://curl.se" class="uri">https://curl.se</a>.</p>
 </blockquote>
 <ul>
-<li>Baixe o conteúdo de um URL para um arquivo:</li>
+<li>Baixe o conteúdo de uma URL para um arquivo:</li>
 </ul>
 <p><code>curl {{http://example.com}} --output {{filename}}</code></p>
 <ul>
@@ -842,11 +891,11 @@
 <p>Baixe arquivos da web. Suporta HTTP, HTTPS e FTP. Mais informações: <a href="https://www.gnu.org/software/wget" class="uri">https://www.gnu.org/software/wget</a>.</p>
 </blockquote>
 <ul>
-<li>Baixe o conteúdo de um URL para um arquivo (denominado “foo” neste caso):</li>
+<li>Baixe o conteúdo de uma URL para um arquivo (denominado “foo” neste caso):</li>
 </ul>
 <p><code>wget {{https://example.com/foo}}</code></p>
 <ul>
-<li>Baixe o conteúdo de um URL para um arquivo (denominado “bar” neste caso):</li>
+<li>Baixe o conteúdo de uma URL para um arquivo (denominado “bar” neste caso):</li>
 </ul>
 <p><code>wget --output-document {{bar}} {{https://example.com/foo}}</code></p>
 <ul>

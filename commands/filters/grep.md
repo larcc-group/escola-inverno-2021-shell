@@ -7,7 +7,7 @@
 
 `grep "{{search_pattern}}" {{path/to/file}}`
 
-- Pesquise uma string exata (desativa as expressões regulares):
+- Pesquise um texto (string) exato (desativa as expressões regulares):
 
 `grep --fixed-strings "{{exact_string}}" {{path/to/file}}`
 

@@ -4,11 +4,11 @@
 > Suporta HTTP, HTTPS e FTP.
 > Mais informações: <https://www.gnu.org/software/wget>.
 
-- Baixe o conteúdo de um URL para um arquivo (denominado "foo" neste caso):
+- Baixe o conteúdo de uma URL para um arquivo (denominado "foo" neste caso):
 
 `wget {{https://example.com/foo}}`
 
-- Baixe o conteúdo de um URL para um arquivo (denominado "bar" neste caso):
+- Baixe o conteúdo de uma URL para um arquivo (denominado "bar" neste caso):
 
 `wget --output-document {{bar}} {{https://example.com/foo}}`
 
