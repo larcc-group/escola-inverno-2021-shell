@@ -378,6 +378,66 @@
 <li>Exibe a árvore ignorando os diretórios informados:</li>
 </ul>
 <p><code>tree -I '{{nome_diretorio1|nome_diretorio2}}'</code></p>
+<h3 id="unzip">unzip</h3>
+<blockquote>
+<p>Ferramenta de descompactação de arquivos zip.</p>
+</blockquote>
+<ul>
+<li>Extraindo arquivos zip:</li>
+</ul>
+<p><code>unzip {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip para caminhos específicos:</li>
+</ul>
+<p><code>unzip {{arquivo.zip}} -d {{caminho/para}}</code></p>
+<ul>
+<li>Listando conteúdos de arquivos zip:</li>
+</ul>
+<p><code>unzip -l {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip sobrescrevendo outros arquivos:</li>
+</ul>
+<p><code>unzip -o {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip não sobrescrevendo outros arquivos:</li>
+</ul>
+<p><code>unzip -n {{arquivo.zip}}</code></p>
+<ul>
+<li>Extraindo arquivos zip sem a estrutura dos diretórios:</li>
+</ul>
+<p><code>unzip -j {{arquivo.zip}}</code></p>
+<h3 id="zip">zip</h3>
+<blockquote>
+<p>Ferramenta de compressão de arquivos em arquivos zip.</p>
+</blockquote>
+<ul>
+<li>Compactando arquivos em um arquivo zip:</li>
+</ul>
+<p><code>zip {{output.zip}} {{arquivo1}} {{arquivo2}} {{arquivo3}}</code></p>
+<ul>
+<li>Compactando todos os arquivos de um diretório:</li>
+</ul>
+<p><code>zip {{output.zip}} {{caminho/do/diretorio/*}}</code></p>
+<ul>
+<li>Adicionando arquivos a um arquivo zip existente:</li>
+</ul>
+<p><code>zip {{arquivo_existente.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Compactando todos os arquivos de um diretório mantendo estruturas de diretórios:</li>
+</ul>
+<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Compactando arquivos de um diretório excluindo arquivos específicos:</li>
+</ul>
+<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}} -x {{caminho/a/ser/excluido}}</code></p>
+<ul>
+<li>Compactando arquivos definindo o nível de compressão [9]:</li>
+</ul>
+<p><code>zip -r -{{9}} {{output.zip}} {{caminho/do/diretorio}}</code></p>
+<ul>
+<li>Deletando arquivos de um arquivo zip:</li>
+</ul>
+<p><code>zip -d {{output.zip}} "{{foo/*.ext}}"</code></p>
 <h2 id="filters">Filtros de texto</h2>
 <h3 id="awk">awk</h3>
 <blockquote>
@@ -857,34 +917,6 @@
 <li>Exibir todas as informações disponíveis do sistema (hardware, software, nome de rede):</li>
 </ul>
 <p><code>uname -a</code></p>
-<h3 id="unzip">unzip</h3>
-<blockquote>
-<p>Ferramenta de descompactação de arquivos zip.</p>
-</blockquote>
-<ul>
-<li>Extraindo arquivos zip:</li>
-</ul>
-<p><code>unzip {{arquivo.zip}}</code></p>
-<ul>
-<li>Extraindo arquivos zip para caminhos específicos:</li>
-</ul>
-<p><code>unzip {{arquivo.zip}} -d {{caminho/para}}</code></p>
-<ul>
-<li>Listando conteúdos de arquivos zip:</li>
-</ul>
-<p><code>unzip -l {{arquivo.zip}}</code></p>
-<ul>
-<li>Extraindo arquivos zip sobrescrevendo outros arquivos:</li>
-</ul>
-<p><code>unzip -o {{arquivo.zip}}</code></p>
-<ul>
-<li>Extraindo arquivos zip não sobrescrevendo outros arquivos:</li>
-</ul>
-<p><code>unzip -n {{arquivo.zip}}</code></p>
-<ul>
-<li>Extraindo arquivos zip sem a estrutura dos diretórios:</li>
-</ul>
-<p><code>unzip -j {{arquivo.zip}}</code></p>
 <h3 id="wget">wget</h3>
 <blockquote>
 <p>Baixe arquivos da web. Suporta HTTP, HTTPS e FTP. Mais informações: <a href="https://www.gnu.org/software/wget" class="uri">https://www.gnu.org/software/wget</a>.</p>
@@ -909,37 +941,5 @@
 <li>Limite a velocidade de download e o número de tentativas de conexão:</li>
 </ul>
 <p><code>wget --limit-rate={{300k}} --tries={{100}} {{https://example.com/somepath/}}</code></p>
-<h3 id="zip">zip</h3>
-<blockquote>
-<p>Ferramenta de compressão de arquivos em arquivos zip.</p>
-</blockquote>
-<ul>
-<li>Compactando arquivos em um arquivo zip:</li>
-</ul>
-<p><code>zip {{output.zip}} {{arquivo1}} {{arquivo2}} {{arquivo3}}</code></p>
-<ul>
-<li>Compactando todos os arquivos de um diretório:</li>
-</ul>
-<p><code>zip {{output.zip}} {{caminho/do/diretorio/*}}</code></p>
-<ul>
-<li>Adicionando arquivos a um arquivo zip existente:</li>
-</ul>
-<p><code>zip {{arquivo_existente.zip}} {{caminho/do/diretorio}}</code></p>
-<ul>
-<li>Compactando todos os arquivos de um diretório mantendo estruturas de diretórios:</li>
-</ul>
-<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}}</code></p>
-<ul>
-<li>Compactando arquivos de um diretório excluindo arquivos específicos:</li>
-</ul>
-<p><code>zip -r {{output.zip}} {{caminho/do/diretorio}} -x {{caminho/a/ser/excluido}}</code></p>
-<ul>
-<li>Compactando arquivos definindo o nível de compressão [9]:</li>
-</ul>
-<p><code>zip -r -{{9}} {{output.zip}} {{caminho/do/diretorio}}</code></p>
-<ul>
-<li>Deletando arquivos de um arquivo zip:</li>
-</ul>
-<p><code>zip -d {{output.zip}} "{{foo/*.ext}}"</code></p>
 </body>
 </html>
