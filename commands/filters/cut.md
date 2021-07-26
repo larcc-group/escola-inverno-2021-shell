@@ -15,7 +15,7 @@
 
 `cut -c {{3-}}`
 
-- Corte o quinto campo de cada linha, usando dois pontos como delimitador de campo (o delimitador padrão é tabulação):
+- Corte o quinto campo de cada linha, usando dois pontos como delimitador de campo (o delimitador padrão é tab):
 
 `cut -d'{{:}}' -f{{5}}`
 
