@@ -2,7 +2,7 @@
 
 Adaptado das [TLDR PAGES](https://github.com/tldr-pages/tldr).
 
-Nota: caso encontre algum comando navegando por fórums de internet ou similares e não sabe o que ele faz, pode tentar explicá-lo através do [explainshell](https://explainshell.com/)
+Nota: caso encontre algum comando navegando por fóruns de internet ou similares e não sabe o que ele faz, pode tentar explicá-lo através do [explainshell](https://explainshell.com/)
 
 ## Índice
 * [Manipulação de arquivos](#files)
